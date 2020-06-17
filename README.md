@@ -1,3 +1,5 @@
 # CourseraAlgorithms
 
-A description of this package.
+The programming assignment of Coursera Algorithms .
+
+
