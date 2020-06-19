@@ -49,39 +49,43 @@ extension Graph: CustomStringConvertible {
 
 extension Graph {
     
+    /// implement dfs search iteratively
+    /// -Params:
+    
+    func dfs(from source: Int, visited: inout [Bool], afterVisit: ((Int) -> ())? = nil ) {
+        
+        var stack: [Int] = []
+        stack.append(source)
+        visited[source] = true
+        
+        while !stack.isEmpty {
+            let start = stack.last!
+            if let end = adjList[start].first(where: { !visited[$0] }) {
+                stack.append(end)
+                visited[end] = true
+            } else {
+                let last = stack.popLast()!
+                afterVisit?(last)
+            }
+        }
+        
+    }
+    
     /// the finish time of each vertex by dfs search
     /// - Returns: the finish time of vertex in ascend order
     func dfsFinishTime() -> [Int] {
         var result = [Int]()
         result.reserveCapacity(adjList.count)
         
-        
         var visited: [Bool] = .init(repeating: false, count: adjList.count)
-        // depth first search, the vertex is not visited
         
-        // the value and index of vertex in adjList
-        var stack: [Int] = []
         for i in 1...adjList.count-1 {
             if !visited[i] {
-                stack.append(i)
-                visited[i] = true
-                
-                while !stack.isEmpty {
-                    
-                    let start = stack.last!
-                    
-                    if let end = adjList[start].first(where: { !visited[$0] }) {
-                        stack.append(end)
-                        visited[end] = true
-                    } else {
-                        result.append(stack.popLast()!)
-                    }
-                }
+                dfs(from: i, visited: &visited) { result.append($0) }
             }
         }
         
         return result
-        
     }
     
     /// compute the strongly connected component
@@ -90,53 +94,14 @@ extension Graph {
         var g = self
         let vertices = g.reversed().dfsFinishTime()
         
-        
         var count = 0
         var result: [Int] = []
-        
         var visited: [Bool] = .init(repeating: false, count: adjList.count)
-        // depth first search, the vertex is not visited
-        
-// the recursive approach has performance issue, resulting stack overflow
-//        func dfs(from vertex: Int) {
-//
-//            visited[vertex] = true
-//            for next in adjList[vertex] {
-//                if !visited[next] {
-//                    dfs(from: next)
-//                }
-//            }
-//            count += 1
-//        }
-//
-//        for i in vertices.reversed() {
-//            if !visited[i] {
-//                count = 0
-//                dfs(from: i)
-//                result.append(count)
-//            }
-//        }
-        
-        
-        var stack: [Int] = []
+
         for i in vertices.reversed() {
             if !visited[i] {
-                stack.append(i)
-                visited[i] = true
-                
                 count = 0
-                while !stack.isEmpty {
-                    
-                    let start = stack.last!
-                    if let end = adjList[start].first(where: { !visited[$0] }) {
-                        stack.append(end)
-                        visited[end] = true
-                    } else {
-                        
-                        count += 1
-                        _ = stack.popLast()!
-                    }
-                }
+                dfs(from: i, visited: &visited) { _ in count += 1 }
                 result.append(count)
             }
         }
