@@ -10,7 +10,7 @@ import Foundation
 
 /// a directed graph, with vertex represent by int
 struct Graph {
-    /// `i`th element  represents  all the vertexs from i
+    /// `i`th element  represents  all the vertices from i
     var adjList: [[Int]]
     
     /// return the graph with all the edges reversed
@@ -88,7 +88,7 @@ extension Graph {
     /// - Returns: an array of strongly connected component's count
     func SCC() -> [Int] {
         var g = self
-        let vertexs = g.reversed().dfsFinishTime()
+        let vertices = g.reversed().dfsFinishTime()
         
         
         var count = 0
@@ -109,7 +109,7 @@ extension Graph {
 //            count += 1
 //        }
 //
-//        for i in vertexs.reversed() {
+//        for i in vertices.reversed() {
 //            if !visited[i] {
 //                count = 0
 //                dfs(from: i)
@@ -119,7 +119,7 @@ extension Graph {
         
         
         var stack: [Int] = []
-        for i in vertexs.reversed() {
+        for i in vertices.reversed() {
             if !visited[i] {
                 stack.append(i)
                 visited[i] = true

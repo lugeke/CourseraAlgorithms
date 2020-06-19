@@ -59,16 +59,16 @@ final class CourseraAlgorithmsTests: XCTestCase {
             .deletingLastPathComponent()
             .appendingPathComponent("SCC.txt")
         
-        // the graph contains 875714 vertexs
+        // the graph contains 875714 vertices
         var h = Graph(adjList: .init(repeating: [], count: 875715))
         let lines = try! String(contentsOf: sccURL).split(separator: "\n")
         
         
         measure {
             for line in lines {
-                let vertexs = line.split(separator: " ")
-                //    print(vertexs)
-                h.addEdge(Int(vertexs[0])!, Int(vertexs[1])!)
+                let vertices = line.split(separator: " ")
+                //    print(vertices)
+                h.addEdge(Int(vertices[0])!, Int(vertices[1])!)
             }
             print(h.SCC()
                 .sorted(by: >)
