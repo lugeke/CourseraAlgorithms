@@ -24,10 +24,21 @@ struct Graph {
         return Graph(adjList: reverse)
     }
     
+    struct Vertex: Hashable {
+        let source: Int
+        let destination: Int
+    }
+    
+    var _distances: [Vertex: Double] = [:]
+
+    func distance(_ source: Int, _ destination: Int) -> Double {
+        return _distances[Vertex(source: source, destination: destination), default: .infinity]
+    }
     
     /// add edge connected from `from` to `to`
-    mutating func addEdge(_ from: Int, _ to: Int) {
+    mutating func addEdge(_ from: Int, _ to: Int, weight: Double? = nil) {
         adjList[from].append(to)
+        if let weight = weight { _distances[Vertex(source: from, destination: to)] = weight }
     }
     
 }
@@ -37,7 +48,13 @@ extension Graph: CustomStringConvertible {
         var result = [String]()
         for i in 1...adjList.count-1 {
             for j in adjList[i] {
-                result.append("\(i) -> \(j)")
+                let dis = distance(i, j)
+                if dis == .infinity {
+                    result.append("\(i) -> \(j)")
+                } else {
+                    result.append("\(i) -> \(j) =\(dis)")
+                }
+                
             }
         }
         
