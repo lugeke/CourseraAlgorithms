@@ -16,9 +16,8 @@ final class InversionsTests: XCTestCase {
         XCTAssertEqual(inversions([3]), 0)
         XCTAssertEqual(inversions([1,3,5,2,4,6]), 3)
         
-        let url = URL(fileURLWithPath: #file)
-            .deletingLastPathComponent()
-            .appendingPathComponent("IntegerArray.txt")
+        
+        let url = URL.testFile(name: "IntegerArray.txt")
         
         let lines = try! String(contentsOf: url).split(separator: "\r\n")
         

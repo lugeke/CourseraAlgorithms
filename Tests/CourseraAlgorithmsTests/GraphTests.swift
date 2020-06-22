@@ -57,9 +57,7 @@ final class GraphTests: XCTestCase {
     
     func testBigGraph() {
         
-        let sccURL = URL(fileURLWithPath: #file)
-            .deletingLastPathComponent()
-            .appendingPathComponent("SCC.txt")
+        let sccURL = URL.testFile(name: "SCC.txt")
         
         // the graph contains 875714 vertices
         var h = Graph(adjList: .init(repeating: [], count: 875715))
