@@ -35,4 +35,11 @@ final class MSTTests: XCTestCase {
         let sum = g.MST()!
         XCTAssertEqual(sum, 7)
     }
+    
+    func testBigGraph() {
+        let url = URL.testFile(name: "edges.txt")
+        let g = Graph(fromURL: url)
+        let sum = g.MST()!
+        XCTAssertEqual(sum, -3612829)
+    }
 }
