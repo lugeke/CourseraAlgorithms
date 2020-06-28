@@ -34,15 +34,15 @@ final class SchduleTests: XCTestCase {
                 return a.weight-a.length > b.weight-b.length
             }
         }
-        print(sum)
+        XCTAssertEqual(sum, 69119377652)
     }
     
     ///  schedules jobs (optimally) in decreasing order of the ratio (weight/length)
     func testByRatio() {
         let sum = schdule(jobs: Self.jobs) { a, b in
-            a.weight/a.length < b.weight/b.length 
+            Double(a.weight)/Double(a.length) > Double(b.weight)/Double(b.length)
         }
-        print(sum)
+        XCTAssertEqual(sum, 67311454237)
     }
     
 }
