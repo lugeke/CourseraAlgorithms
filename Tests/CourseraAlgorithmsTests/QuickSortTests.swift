@@ -69,18 +69,18 @@ final class quickSortTests: XCTestCase {
         let original = ary
         
         var count = ary.quickSort()
-        print(count)
+        XCTAssertEqual(count, 162085)
         XCTAssertEqual(ary, Array(1...m))
         
         ary = original
         count = ary.quickSort(pivotPolicy: byLastElement(_:_:))
-        print(count)
+        XCTAssertEqual(count, 164123)
         XCTAssertEqual(ary, Array(1...m))
         
         
         ary = original
         count = ary.quickSort(pivotPolicy: byMedianElement(_:_:))
-        print(count)
+        XCTAssertEqual(count, 138382)
         XCTAssertEqual(ary, Array(1...m))
         
         

@@ -26,7 +26,7 @@ final class InversionsTests: XCTestCase {
         for line in lines {
             ary.append(Int(line)!)
         }
-        print(inversions(ary))
+        XCTAssertEqual(inversions(ary), 2407905288)
     }
     
 
