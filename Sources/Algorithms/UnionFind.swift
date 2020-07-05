@@ -15,10 +15,11 @@ struct UnionFind {
     
     init(n: Int) {
         count = n
-        id = .init(repeating: 1, count: n+1)
-        
-        for i in 1...n {
-            id[i] = i
+        id = .init(unsafeUninitializedCapacity: n+1) { buffer, count in
+            for i in 0..<n+1 {
+                buffer[i] = i
+            }
+            count = n+1
         }
         size = .init(repeating: 1, count: n+1)
     }
