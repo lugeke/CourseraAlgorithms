@@ -70,22 +70,19 @@ struct Heap {
         //node i has at least a left child
         var left = 2*i+1
         while left < count {
-            var ary = [i, left]
+            
+            // node for the smallest/largest
+            var x = left
             
             // also has right child
-            let right = 2*i+2
-            if right < count { ary.append(right)}
+            let right = left + 1
+            if right < count && order(tree[right], tree[left]) { x = right }
             
-            ary.sort { order(tree[$0], tree[$1]) }
-            
-            let x = ary[0]
-            if x != i {
+            if order(tree[x], tree[i]) {
                 tree.swapAt(i, x)
                 i = x
                 left = 2*i+1
-            } else {
-                return
-            }
+            } else { return }
         }
     }
     
