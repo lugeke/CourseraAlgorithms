@@ -42,12 +42,10 @@ struct Heap {
     
     mutating func bubbleUp(_ i: Int) {
         var i = i
-        var parent = (i-1) / 2
         // when node i has parent  and need bubble up
-        while parent >= 0 && order(tree[i], tree[parent]) {
+        while case let parent = (i-1) / 2, parent >= 0, order(tree[i], tree[parent]) {
             tree.swapAt(i, parent)
             i = parent
-            parent = (i-1) / 2
         }
     }
     
@@ -68,20 +66,17 @@ struct Heap {
     mutating func bubbleDown(_ i: Int) {
         var i = i
         //node i has at least a left child
-        var left = 2*i+1
-        while left < count {
+        while case let left = 2*i+1, left < count {
             
-            // node for the smallest/largest
+            // the smallest/largest in the parents node
             var x = left
             
             // also has right child
-            let right = left + 1
-            if right < count && order(tree[right], tree[left]) { x = right }
+            if case let right = left + 1, right < count, order(tree[right], tree[left]) { x = right }
             
             if order(tree[x], tree[i]) {
                 tree.swapAt(i, x)
                 i = x
-                left = 2*i+1
             } else { return }
         }
     }
