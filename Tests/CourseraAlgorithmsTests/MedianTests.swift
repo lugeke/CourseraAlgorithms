@@ -25,6 +25,17 @@ final class MedianTests: XCTestCase {
         XCTAssertEqual(h.extract(), 5)
         XCTAssertEqual(h.extract(), nil)
         
+        var randomAry = Array(1...1000)
+        randomAry.shuffle()
+        
+        for element in randomAry {
+            h.insert(element)
+        }
+        
+        for i in 1...1000 {
+            XCTAssertEqual(h.extract(), i)
+        }
+        
     }
     
     func testMedianSmall() {
