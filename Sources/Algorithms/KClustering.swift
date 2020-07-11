@@ -57,37 +57,34 @@ struct KClustering {
 }
 
 
-func largestKClustering(_ nodes: Set<[Bool]>) -> Int {
+func largestKClustering(_ nodes: Set<Int>, bits: Int) -> Int {
     
-    // return all the strings with hamming distance to str equal to 1 or 2
-    func distanceBy2(_ str: [Bool]) -> [[Bool]] {
-        var result: [[Bool]] = []
-        let bits = str.count
-        let change1bit: [[Bool]] = (0..<bits).map {
-            var s = str
-            s[$0].toggle()
-            return s
+    // return all the bitmasks with 1 or 2 bit set to 1
+    func bitmasks() -> [Int] {
+        var result: [Int] = []
+        let change1bit: [Int] = (0..<bits).map {
+            1 << $0
         }
         
         result += change1bit
         
         for i in 0..<bits {
             for j in i+1..<bits {
-                var str = str
-                str[i].toggle()
-                str[j].toggle()
-                result.append(str)
+                result.append( (1 << i) ^ (1 << j) )
             }
         }
         
         return result
     }
     
-    let dict: [[Bool]: Int] = .init(uniqueKeysWithValues: zip(nodes, 1...nodes.count))
+    let dict: [Int: Int] = .init(uniqueKeysWithValues: zip(nodes, 1...nodes.count))
     var uf = UnionFind(n: nodes.count)
+    let masks = bitmasks()
     for (nodeP, p) in dict {
-        for q in distanceBy2(nodeP) {
-            if let q = dict[q] {
+        // use xor operator to compute all the nodes with hamming distance equal 1 or 2
+        for mask in masks {
+            let nodeQ = mask ^ nodeP
+            if let q = dict[nodeQ] {
                 _ = uf.union(p, q)
             }
         }
@@ -95,4 +92,5 @@ func largestKClustering(_ nodes: Set<[Bool]>) -> Int {
     
     return uf.count
 }
+
 

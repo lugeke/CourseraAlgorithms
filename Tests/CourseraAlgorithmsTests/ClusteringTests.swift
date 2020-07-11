@@ -41,8 +41,15 @@ final class ClustingTests: XCTestCase {
         let url = URL.testFile(name: "clustering_big.txt")
         let lines = try! String(contentsOf: url).split(separator: "\n")
         
-        let set = Set(lines.dropFirst().map{ $0.replacingOccurrences(of: " ", with: "").map{ $0 == "1" ? true : false} })
-        let count = largestKClustering(set)
+        let bits = Int(lines[0].split(separator: " ")[1])!
+        let set = Set(lines.dropFirst()
+                        .map{
+                            Int($0.replacingOccurrences(of: " ", with: ""), radix: 2)!
+                        })
+        
+        print("\(Date())")
+        let count = largestKClustering(set, bits: bits)
+        print("\(Date())")
         
         XCTAssertEqual(count, 6118)
         
