@@ -9,7 +9,7 @@
 import Foundation
 
 /// a directed graph, with vertex represent by int
-struct Graph {
+public struct Graph {
     /// `i`th element  represents  all the vertices from i
     var adjList: [[Int]]
     
@@ -32,6 +32,7 @@ struct Graph {
     var _distances: [Vertex: Double] = [:]
 
     func distance(_ source: Int, _ destination: Int) -> Double {
+        if source == destination { return 0 }
         return _distances[Vertex(source: source, destination: destination), default: .infinity]
     }
     
@@ -44,7 +45,7 @@ struct Graph {
 }
 
 extension Graph: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var result = [String]()
         for i in 1...adjList.count-1 {
             for j in adjList[i] {
@@ -127,3 +128,24 @@ extension Graph {
     }
 }
 
+extension Graph {
+    public init(fromURL url: URL, directed: Bool = false) {
+        
+        let lines = try! String(contentsOf: url).components(separatedBy: .newlines)
+        let line = lines[0].components(separatedBy: .whitespaces)
+        let nodes = Int(line[0])!, edges = Int(line[1])!
+        
+        self = .init(adjList: .init(repeating: [], count: nodes+1))
+        
+        for i in 1...edges {
+            let line = lines[i].components(separatedBy: .whitespaces)
+            
+            addEdge(Int(line[0])!, Int(line[1])!, weight: Double(line[2])!)
+            if !directed {
+                addEdge(Int(line[1])!, Int(line[0])!, weight: Double(line[2])!)
+            }
+            
+        }
+        
+    }
+}
