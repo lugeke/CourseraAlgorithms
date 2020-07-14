@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Heap {
+struct Heap<T: Keyable> {
     
     enum HeapType {
         case min
         case max
     }
     
-    var tree: [Int] = []
+    var tree: [T] = []
     
     let type: HeapType
     
@@ -22,12 +22,16 @@ struct Heap {
         tree.count
     }
     
-    var order: (Int, Int) -> Bool {
+    var isEmpty: Bool {
+        tree.count == 0
+    }
+    
+    var order: (T, T) -> Bool {
         switch type {
         case .min:
-            return (<)
+            return {$0.key() < $1.key()}
         case .max:
-            return (>)
+            return {$0.key() > $1.key()}
         }
     }
     
@@ -35,7 +39,7 @@ struct Heap {
         self.type = type
     }
     
-    mutating func insert(_ n: Int) {
+    mutating func insert(_ n: T) {
         tree.append(n)
         bubbleUp(count-1)
     }
@@ -49,11 +53,11 @@ struct Heap {
         }
     }
     
-    func peek() -> Int? {
+    func peek() -> T? {
         tree.first
     }
     
-    mutating func extract() -> Int? {
+    mutating func extract() -> T? {
         guard !tree.isEmpty else {
             return nil
         }

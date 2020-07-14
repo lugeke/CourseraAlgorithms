@@ -13,7 +13,7 @@ final class MedianTests: XCTestCase {
     
     func testHeap() {
         
-        var h = Heap()
+        var h = Heap<Int>()
         h.insert(5)
         h.insert(4)
         h.insert(3)

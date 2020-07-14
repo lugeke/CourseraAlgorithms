@@ -8,8 +8,8 @@
 import Foundation
 
 struct Median {
-    var lowHalf = Heap(type: .max)
-    var highHalf = Heap(type: .min)
+    var lowHalf = Heap<Int>(type: .max)
+    var highHalf = Heap<Int>(type: .min)
     
     mutating func insert(_ n: Int) {
         if count == 0 { lowHalf.insert(n) }
