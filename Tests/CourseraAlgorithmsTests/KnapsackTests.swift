@@ -14,6 +14,7 @@ final class KnapsackTests: XCTestCase {
     func testKnapsack() {
         let items = [(0, 0), (3,4), (2,3), (4,2), (4, 3)]
         XCTAssertEqual(knapsack(items, weight: 6), 8)
+        XCTAssertEqual(knapsackRecursive(items, weight: 6), 8)
     }
     
     
@@ -32,6 +33,7 @@ final class KnapsackTests: XCTestCase {
         }
         
         XCTAssertEqual(knapsack(items, weight: size), 2493893)
+        XCTAssertEqual(knapsackRecursive(items, weight: size), 2493893)
     }
     
     func testKnapsackBig() {
@@ -48,7 +50,7 @@ final class KnapsackTests: XCTestCase {
             items.append((Int(line[0])!, Int(line[1])!))
         }
         
-        XCTAssertEqual(knapsack(items, weight: size), 4243395)
+        XCTAssertEqual(knapsackRecursive(items, weight: size), 4243395)
     }
     
 }
