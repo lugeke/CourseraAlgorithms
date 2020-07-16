@@ -51,7 +51,7 @@ extension BinaryTree where T == Int {
             return
         case let .node(left: l, value: v, right: r):
             // node is leaf
-            if case .null = l, case .null = r {
+            if l == nil && r == nil {
                 coding[v] = currentCoding
             }
             l.coding(currentCoding: currentCoding+"0", &coding)

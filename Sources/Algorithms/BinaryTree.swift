@@ -24,16 +24,14 @@ enum BinaryTree<T> {
 }
 
 
-
-extension BinaryTree: Keyable where T: Comparable {
-    func key() -> T {
-        switch self {
-        case let .node(left: _, value: v, right: _):
-            return v
-        default:
-            fatalError()
-        }
+extension BinaryTree: ExpressibleByNilLiteral {
+    
+    init(nilLiteral: ()) {
+        self = .null
     }
+    
 }
+
+extension BinaryTree: Equatable where T: Equatable {}
 
 
