@@ -9,7 +9,7 @@ import Foundation
 
 
 
-enum BinaryTree<T> {
+public enum BinaryTree<T> {
     case null
     indirect case node(left: BinaryTree,value: T, right: BinaryTree)
     
@@ -26,7 +26,7 @@ enum BinaryTree<T> {
 
 extension BinaryTree: ExpressibleByNilLiteral {
     
-    init(nilLiteral: ()) {
+    public init(nilLiteral: ()) {
         self = .null
     }
     
