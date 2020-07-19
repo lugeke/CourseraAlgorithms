@@ -40,8 +40,9 @@ extension Graph {
 
         
         for m in 2...n {
-            for var s in (2...n).choose(n: m-1) {
-                s.insert(1)
+            for  x in (2...n).choose(m: m-1) {
+                
+                let s = Set(x + [1])
                 
                 for j in s where j != 1 {
                     var minium = Double.infinity
@@ -62,52 +63,4 @@ extension Graph {
     }
 }
 
-extension Collection where Element: Hashable {
-    
-    func choose(n: Int) -> [Set<Element>] {
-        let count = self.count
-        guard (1...count).contains(n)  else {
-            return []
-        }
-        
-        var indices: [Index] = .init(repeating: startIndex, count: n)
-        
-        // 1 <= i <= n
-        // offset from endIndex
-        var i = n
-        
-        var result: [Set<Element>] = []
-        
-        while i <= n {
-            
-            var t = indices[n-i]
-            // 1 <= i <= n
-            while i - 1 >= 1 {
-                formIndex(after: &t)
-                i -= 1
-                indices[n-i] = t
-            }
-            
-            while indices[n-1] <= self.index(endIndex, offsetBy: -1) {
-                let s = Set(indices.map{ self[$0]})
-                result.append(s)
-                formIndex(after: &indices[n-i])
-            }
-            
-            while i <= n {
-                if indices[n-i] < self.index(endIndex, offsetBy: -i) {
-                    formIndex(after: &indices[n-i])
-                    break
-                }
-                i += 1
-            }
-            
-            
-        }
-        
-        
-        
-        
-        return result
-    }
-}
+

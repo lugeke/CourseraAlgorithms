@@ -15,11 +15,11 @@ final class TSPTests: XCTestCase {
     func testChoose() {
         let x = [1,2,3,4,5]
         
-        print(x.choose(n: 1))
-        print(x.choose(n: 2))
-        print(x.choose(n: 3))
-        print(x.choose(n: 4))
-        print(x.choose(n: 5))
+        print(x.choose(m: 1))
+        print(x.choose(m: 2))
+        print(x.choose(m: 3))
+        print(x.choose(m: 4))
+        print(x.choose(m: 5))
     }
     
     func testTSP() {
