@@ -31,13 +31,13 @@ public struct Graph {
     
     var _distances: [Vertex: Double] = [:]
 
-    func distance(_ source: Int, _ destination: Int) -> Double {
+    public func distance(_ source: Int, _ destination: Int) -> Double {
         if source == destination { return 0 }
         return _distances[Vertex(source: source, destination: destination), default: .infinity]
     }
     
     /// add edge connected from `from` to `to`
-    mutating func addEdge(_ from: Int, _ to: Int, weight: Double? = nil) {
+    public mutating func addEdge(_ from: Int, _ to: Int, weight: Double? = nil) {
         adjList[from].append(to)
         if let weight = weight { _distances[Vertex(source: from, destination: to)] = weight }
     }
@@ -148,4 +148,9 @@ extension Graph {
         }
         
     }
+    
+    public init(_ n: Int) {
+        self = .init(adjList: .init(repeating: [], count: n+1))
+    }
 }
+
