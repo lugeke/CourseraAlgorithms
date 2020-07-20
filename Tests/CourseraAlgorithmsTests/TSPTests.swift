@@ -51,41 +51,47 @@ final class TSPTests: XCTestCase {
             let line = lines[i].components(separatedBy: .whitespaces)
             points.append((Double(line[0])!, Double(line[1])!))
         }
-
-        var g1 = Graph(13)
-
-        for i in 1...13 {
-            for j in i+1..<14 {
-                let dis = sqrt(
-                    (points[i].0 - points[j].0)*(points[i].0 - points[j].0)
-                    + (points[i].1 - points[j].1)*(points[i].1 - points[j].1)
-                )
-                g1.addEdge(i, j, weight: dis)
-                g1.addEdge(j, i, weight: dis)
+        
+        measure(metrics: [XCTCPUMetric(), XCTMemoryMetric()]) {
+            
+            
+            
+            var g1 = Graph(13)
+            
+            for i in 1...13 {
+                for j in i+1..<14 {
+                    let dis = sqrt(
+                        (points[i].0 - points[j].0)*(points[i].0 - points[j].0)
+                            + (points[i].1 - points[j].1)*(points[i].1 - points[j].1)
+                    )
+                    g1.addEdge(i, j, weight: dis)
+                    g1.addEdge(j, i, weight: dis)
+                }
             }
-        }
-
-        let x1 = g1.tsp()
-         
-
-
-        var g2 = Graph(14)
-
-        for i in 12...25 {
-            for j in i+1..<26 {
-                let dis = sqrt(
-                    (points[i].0 - points[j].0)*(points[i].0 - points[j].0)
-                    + (points[i].1 - points[j].1)*(points[i].1 - points[j].1)
-                )
-                g2.addEdge(i-11, j-11, weight: dis)
-                g2.addEdge(j-11, i-11, weight: dis)
+            
+            let x1 = g1.tsp()
+            
+            
+            
+            var g2 = Graph(14)
+            
+            for i in 12...25 {
+                for j in i+1..<26 {
+                    let dis = sqrt(
+                        (points[i].0 - points[j].0)*(points[i].0 - points[j].0)
+                            + (points[i].1 - points[j].1)*(points[i].1 - points[j].1)
+                    )
+                    g2.addEdge(i-11, j-11, weight: dis)
+                    g2.addEdge(j-11, i-11, weight: dis)
+                }
             }
+            
+            let x2 = g2.tsp()
+            
+            let x = x1 + x2 - g1.distance(12, 13)*2
+            
+            XCTAssertEqual(Int(x), 26442)
+            
         }
-
-        let x2 = g2.tsp()
-
-        let x = x1 + x2 - g1.distance(12, 13)*2
-
-        XCTAssertEqual(Int(x), 26442)
     }
 }

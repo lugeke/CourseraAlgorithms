@@ -42,7 +42,7 @@ extension Graph {
         for m in 2...n {
             for  x in (2...n).choose(m: m-1) {
                 
-                let s = Set(x + [1])
+                let s = Set(x + CollectionOfOne(1))
                 
                 for j in s where j != 1 {
                     var minium = Double.infinity
