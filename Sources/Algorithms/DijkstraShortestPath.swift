@@ -10,14 +10,15 @@ import Foundation
 extension Graph {
     
     /// return the shortest paths from source vertex to all other vertices
+    /// using dijkstra algorithm
     func dijkstraPaths(source: Int) -> [Double] {
-        var shortestPaths: [Double] = .init(repeating: .infinity, count: adjList.count)
+        var shortestPaths: [Double] = .init(repeating: .infinity, count: n+1)
         shortestPaths[source] = 0
         
         var X: Set<Int> = .init()
         var V_X: Set<Int> = .init()
         
-        var visited: [Bool] = .init(repeating: false, count: adjList.count)
+        var visited: [Bool] = .init(repeating: false, count: n+1)
         dfs(from: source, visited: &visited) { V_X.insert($0) }
         X.reserveCapacity(V_X.count)
         
@@ -29,7 +30,7 @@ extension Graph {
             var smallestGreedyScore = Double.infinity
             var node = 0
             for u in X {
-                for v in adjList[u] {
+                for v in allHeads(tail: u) {
                     if V_X.contains(v) {
                         let score = shortestPaths[u] + distance(u,v)
                         if score < smallestGreedyScore {

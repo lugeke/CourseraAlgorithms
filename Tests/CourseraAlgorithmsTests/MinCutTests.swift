@@ -48,7 +48,7 @@ final class MinCutTests: XCTestCase {
             graph.addEdge(e.p, e.q)
         }
         
-        let results: [Int] = (0..<1000).map { _ in
+        let results: [Int] = (0..<200).map { _ in
             var g = graph
             return g.minCount()
         }

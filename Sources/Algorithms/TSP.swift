@@ -11,8 +11,6 @@ extension Graph {
     
     public func tsp() -> Double {
         
-        let n = adjList.count-1
-        
         struct A {
             struct Sj: Hashable {
                 let S: Set<Int>

@@ -24,7 +24,7 @@ extension KClustering {
 }
 
 
-final class ClustingTests: XCTestCase {
+final class ClusteringTests: XCTestCase {
     
     func testSmall() {
         var clustering = KClustering(url: URL.testFile(name: "clustering0.txt"), k: 2)

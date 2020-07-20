@@ -11,25 +11,25 @@ import Foundation
 extension Graph {
     func floydMarshallAllPairsShortestPaths() -> [[Double]]? {
         
-        var A: [[Double]] = .init(repeating: .init(repeating: .infinity, count: adjList.count),
-                                                     count: adjList.count)
+        var A: [[Double]] = .init(repeating: .init(repeating: .infinity, count: n+1),
+                                                     count: n+1)
         
-        for i in 1..<adjList.count {
-            for j in 1..<adjList.count {
+        for i in 1..<n+1 {
+            for j in 1..<n+1 {
                 A[i][j] = distance(i, j)
             }
         }
         
-        for k in 1..<adjList.count {
+        for k in 1..<n+1 {
             let previous = A
-            for i in 1..<adjList.count {
-                for j in 1..<adjList.count {
+            for i in 1..<n+1 {
+                for j in 1..<n+1 {
                     A[i][j] = min(previous[i][j], previous[i][k] + previous[k][j])
                 }
             }
         }
         
-        for i in 1..<adjList.count {
+        for i in 1..<n+1 {
             if A[i][i] < 0 { return nil }
         }
         
@@ -47,8 +47,8 @@ extension Graph {
         var shortest = Double.infinity
         
         
-        for i in 1..<adjList.count {
-            for j in 1..<adjList.count where i != j {
+        for i in 1..<n+1 {
+            for j in 1..<n+1 where i != j {
                 shortest = min(shortest, pairs[i][j])
             }
             

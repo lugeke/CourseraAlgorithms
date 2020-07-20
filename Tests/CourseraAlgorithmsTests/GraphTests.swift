@@ -12,7 +12,7 @@ import XCTest
 final class GraphTests: XCTestCase {
     
     func testDFS() {
-        var g = Graph(adjList: .init(repeating: [], count: 5))
+        var g = Graph(4)
         g.addEdge(1, 2)
         g.addEdge(2, 3)
         g.addEdge(3, 1)
@@ -36,7 +36,7 @@ final class GraphTests: XCTestCase {
 
     func testSmallGraph() {
         
-        var g = Graph(adjList: .init(repeating: [], count: 10))
+        var g = Graph(9)
         g.addEdge(4, 2)
         g.addEdge(2, 3)
         g.addEdge(3, 4)
@@ -60,26 +60,19 @@ final class GraphTests: XCTestCase {
         let sccURL = URL.testFile(name: "SCC.txt")
         
         // the graph contains 875714 vertices
-        var h = Graph(adjList: .init(repeating: [], count: 875715))
-        let lines = try! String(contentsOf: sccURL).split(separator: "\n")
-        
-        
+        var h = Graph(875714)
+        let lines = try! String(contentsOf: sccURL).components(separatedBy: .newlines)
         
         for line in lines {
-            let vertices = line.split(separator: " ")
-            //    print(vertices)
+            let vertices = line.components(separatedBy: .whitespaces)
             h.addEdge(Int(vertices[0])!, Int(vertices[1])!)
         }
         
+        print(Date())
+        let big5 = h.SCC().sorted(by: >).prefix(5)
+        XCTAssertEqual(big5, [434821, 968, 459, 313, 211])
+        print(Date())
         
-        measure {
-            let big5 = h.SCC().sorted(by: >).prefix(5)
-            XCTAssertEqual(big5, [434821, 968, 459, 313, 211])
-        }
-        
-        
-            
-            
     }
     
 

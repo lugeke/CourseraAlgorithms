@@ -11,8 +11,12 @@ import Foundation
 /// a directed graph, with vertex represent by int, start from 1
 public struct Graph {
     /// `i`th element  represents  all the vertices whose tail is i
-    var adjList: [[Int]]
+    private var adjList: [[Int]]
     
+    // the max number of vertex
+    var n: Int {
+        adjList.count-1
+    }
     /// return the graph with all the edges reversed
     mutating func reversed() -> Graph {
         var reverse = [[Int]].init(repeating: [], count: adjList.count)
@@ -41,6 +45,10 @@ public struct Graph {
     public mutating func addEdge(_ from: Int, _ to: Int, weight: Double? = nil) {
         adjList[from].append(to)
         if let weight = weight { weights[Edge(source: from, destination: to)] = weight }
+    }
+    
+    func allHeads(tail: Int) -> [Int] {
+        adjList[tail]
     }
     
 }
