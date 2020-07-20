@@ -5,15 +5,18 @@
 //  Created by lujiaheng on 2020/7/19.
 //
 
+/// A Sequences for all combinations
 struct Combination<S>: Sequence, IteratorProtocol where S: Sequence{
     typealias Element = [S.Element]
     
-    // choose
+   
     let ary: [S.Element]
+    // the total count of ary
     let n: Int
+    // the count of a combination
     let m: Int
     /// m different indices of ary, increase indices from last to first to produce all combinations
-    /// - Invariant: elements in strictly increase order
+    /// - Invariant: indices are in strictly increase order,
     /// indices[i-1] < indices[i] <= n - m + i
     var indices:[Int]
     
