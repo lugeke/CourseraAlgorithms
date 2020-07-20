@@ -111,14 +111,20 @@ extension Graph {
         var stack: [Int] = []
         stack.append(source)
         visited[source] = true
+        // a map from vertex to the first index of the adjList not visited
+        var dict: [Int: Int] = [:]
         
         while !stack.isEmpty {
-            let start = stack.last!
+            let tail = stack.last!
+            // heads[0..<k] has been visited
+            let k = dict[tail, default: 0]
+            let heads = allHeads(tail: tail)
             
-            if let end = allHeads(tail: start)
-                .first(where: { !visited[$0] }) {
-                stack.append(end)
-                visited[end] = true
+            if let i = heads.dropFirst(k).firstIndex(where: { !visited[$0] }) {
+                let head = heads[i]
+                stack.append(head)
+                dict[tail] = i + 1
+                visited[head] = true
             } else {
                 let last = stack.popLast()!
                 afterVisit?(last)
