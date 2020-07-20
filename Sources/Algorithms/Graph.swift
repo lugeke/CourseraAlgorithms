@@ -108,26 +108,23 @@ extension Graph {
     ///   - afterVisit: a closure accepct vertex number, run when the vertex pops from stack
     func dfs(from source: Int, visited: inout [Bool], afterVisit: ((Int) -> ())? = nil ) {
         
-        var stack: [Int] = []
-        stack.append(source)
+        // tuple of (vertex, the first index of the vertex's adjList unvisited)
+        var stack: [(Int, Int)] = []
+        stack.append((source, 0))
         visited[source] = true
-        // a map from vertex to the first index of the adjList not visited
-        var dict: [Int: Int] = [:]
         
         while !stack.isEmpty {
             let tail = stack.last!
-            // heads[0..<k] has been visited
-            let k = dict[tail, default: 0]
-            let heads = allHeads(tail: tail)
+            let heads = allHeads(tail: tail.0)
             
-            if let i = heads.dropFirst(k).firstIndex(where: { !visited[$0] }) {
+            if let i = heads.dropFirst(tail.1).firstIndex(where: { !visited[$0] }) {
                 let head = heads[i]
-                stack.append(head)
-                dict[tail] = i + 1
+                stack[stack.endIndex-1].1 = i + 1
+                stack.append((head, 0))
                 visited[head] = true
             } else {
                 let last = stack.popLast()!
-                afterVisit?(last)
+                afterVisit?(last.0)
             }
         }
         
