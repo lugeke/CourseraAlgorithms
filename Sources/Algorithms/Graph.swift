@@ -73,73 +73,6 @@ extension Graph: CustomStringConvertible {
     }
 }
 
-
-extension Graph {
-    
-    /// implement dfs search iteratively
-    /// - Parameters:
-    ///   - source: the source vertex
-    ///   - visited: keep track of which vertex were visited
-    ///   - afterVisit: a closure accepct vertex number, run when the vertex pops from stack
-    
-    func dfs(from source: Int, visited: inout [Bool], afterVisit: ((Int) -> ())? = nil ) {
-        
-        var stack: [Int] = []
-        stack.append(source)
-        visited[source] = true
-        
-        while !stack.isEmpty {
-            let start = stack.last!
-            if let end = adjList[start].first(where: { !visited[$0] }) {
-                stack.append(end)
-                visited[end] = true
-            } else {
-                let last = stack.popLast()!
-                afterVisit?(last)
-            }
-        }
-        
-    }
-    
-    /// the finish time of each vertex by dfs search
-    /// - Returns: the finish time of vertices in ascend order
-    func dfsFinishTime() -> [Int] {
-        var result = [Int]()
-        result.reserveCapacity(adjList.count)
-        
-        var visited: [Bool] = .init(repeating: false, count: adjList.count)
-        
-        for i in 1...adjList.count-1 {
-            if !visited[i] {
-                dfs(from: i, visited: &visited) { result.append($0) }
-            }
-        }
-        
-        return result
-    }
-    
-    /// compute the strongly connected component
-    /// - Returns: an array of strongly connected component's count
-    func SCC() -> [Int] {
-        var g = self
-        let vertices = g.reversed().dfsFinishTime()
-        
-        var count = 0
-        var result: [Int] = []
-        var visited: [Bool] = .init(repeating: false, count: adjList.count)
-
-        for i in vertices.reversed() {
-            if !visited[i] {
-                count = 0
-                dfs(from: i, visited: &visited) { _ in count += 1 }
-                result.append(count)
-            }
-        }
-        
-        return result
-    }
-}
-
 extension Graph {
     public init(fromURL url: URL, directed: Bool = false) {
         
@@ -166,3 +99,31 @@ extension Graph {
     }
 }
 
+
+extension Graph {
+    /// implement dfs search iteratively
+    /// - Parameters:
+    ///   - source: the source vertex
+    ///   - visited: keep track of which vertex were visited
+    ///   - afterVisit: a closure accepct vertex number, run when the vertex pops from stack
+    func dfs(from source: Int, visited: inout [Bool], afterVisit: ((Int) -> ())? = nil ) {
+        
+        var stack: [Int] = []
+        stack.append(source)
+        visited[source] = true
+        
+        while !stack.isEmpty {
+            let start = stack.last!
+            
+            if let end = allHeads(tail: start)
+                .first(where: { !visited[$0] }) {
+                stack.append(end)
+                visited[end] = true
+            } else {
+                let last = stack.popLast()!
+                afterVisit?(last)
+            }
+        }
+        
+    }
+}

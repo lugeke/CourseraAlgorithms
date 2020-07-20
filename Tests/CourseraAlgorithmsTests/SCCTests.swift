@@ -51,7 +51,8 @@ final class GraphTests: XCTestCase {
         
         print(g.dfsFinishTime())
         
-        XCTAssertEqual(g.SCC(), [3, 3, 3])
+        let scc = g.SCC().map(\.count)
+        XCTAssertEqual(scc, [3, 3, 3])
         
     }
     
@@ -69,7 +70,7 @@ final class GraphTests: XCTestCase {
         }
         
         print(Date())
-        let big5 = h.SCC().sorted(by: >).prefix(5)
+        let big5 = h.SCC().map(\.count).sorted(by: >).prefix(5)
         XCTAssertEqual(big5, [434821, 968, 459, 313, 211])
         print(Date())
         
