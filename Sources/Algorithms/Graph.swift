@@ -8,9 +8,9 @@
 
 import Foundation
 
-/// a directed graph, with vertex represent by int
+/// a directed graph, with vertex represent by int, start from 1
 public struct Graph {
-    /// `i`th element  represents  all the vertices from i
+    /// `i`th element  represents  all the vertices whose tail is i
     var adjList: [[Int]]
     
     /// return the graph with all the edges reversed
@@ -24,22 +24,23 @@ public struct Graph {
         return Graph(adjList: reverse)
     }
     
-    struct Vertex: Hashable {
+    struct Edge: Hashable {
         let source: Int
         let destination: Int
     }
     
-    var _distances: [Vertex: Double] = [:]
+    // for the directed weighted graph
+    var weights: [Edge: Double] = [:]
 
     public func distance(_ source: Int, _ destination: Int) -> Double {
         if source == destination { return 0 }
-        return _distances[Vertex(source: source, destination: destination), default: .infinity]
+        return weights[Edge(source: source, destination: destination), default: .infinity]
     }
     
     /// add edge connected from `from` to `to`
     public mutating func addEdge(_ from: Int, _ to: Int, weight: Double? = nil) {
         adjList[from].append(to)
-        if let weight = weight { _distances[Vertex(source: from, destination: to)] = weight }
+        if let weight = weight { weights[Edge(source: from, destination: to)] = weight }
     }
     
 }
@@ -68,7 +69,10 @@ extension Graph: CustomStringConvertible {
 extension Graph {
     
     /// implement dfs search iteratively
-    /// -Params:
+    /// - Parameters:
+    ///   - source: the source vertex
+    ///   - visited: keep track of which vertex were visited
+    ///   - afterVisit: a closure accepct vertex number, run when the vertex pops from stack
     
     func dfs(from source: Int, visited: inout [Bool], afterVisit: ((Int) -> ())? = nil ) {
         
@@ -90,7 +94,7 @@ extension Graph {
     }
     
     /// the finish time of each vertex by dfs search
-    /// - Returns: the finish time of vertex in ascend order
+    /// - Returns: the finish time of vertices in ascend order
     func dfsFinishTime() -> [Int] {
         var result = [Int]()
         result.reserveCapacity(adjList.count)
