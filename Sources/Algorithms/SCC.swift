@@ -9,8 +9,8 @@ import Foundation
 
 extension Graph {
     
-    /// the finish time of each vertex by dfs search
-    /// - Returns: the finish time of vertices in ascend order
+    /// the finish time of each vertex satisfy u -> v, f(u) > f(v)
+    /// - Returns: vertices order by finish time (ascend order)
     func dfsFinishTime() -> [Int] {
         var result = [Int]()
         result.reserveCapacity(n+1)
@@ -27,12 +27,12 @@ extension Graph {
     }
     
     
-    /// compute the strongly connected component
-    /// - Returns: an array of vertices of strongly connected component
-    func SCC() -> [[Int]] {
-        var g = self
-        let vertices = g.reversed().dfsFinishTime()
-        
+    /// compute the strongly connected components
+    /// - Returns: an array of strongly connected components
+    /// each component represent by an array of vertices
+    public func SCC() -> [[Int]] {
+        let g = self.reversed()
+        let vertices = g.dfsFinishTime()
         var result: [[Int]] = []
         var visited: [Bool] = .init(repeating: false, count: n+1)
         
@@ -43,7 +43,6 @@ extension Graph {
                 result.append(t)
             }
         }
-        
         return result
     }
 }

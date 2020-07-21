@@ -69,10 +69,10 @@ final class GraphTests: XCTestCase {
             h.addEdge(Int(vertices[0])!, Int(vertices[1])!)
         }
         
-        print(Date())
+//        measure(metrics: [XCTCPUMetric(), XCTMemoryMetric()]) {
         let big5 = h.SCC().map(\.count).sorted(by: >).prefix(5)
         XCTAssertEqual(big5, [434821, 968, 459, 313, 211])
-        print(Date())
+//        }
         
     }
     

@@ -18,7 +18,7 @@ public struct Graph {
         adjList.count-1
     }
     /// return the graph with all the edges reversed
-    mutating func reversed() -> Graph {
+    func reversed() -> Graph {
         var reverse = [[Int]].init(repeating: [], count: adjList.count)
         for start in 1...adjList.count-1 {
             for end in adjList[start] {
