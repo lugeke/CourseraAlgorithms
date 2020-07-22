@@ -62,3 +62,31 @@ extension Graph {
 }
 
 
+public func tspNearestNeighbor(_ graph: [[Double]]) -> Double {
+    
+    var currentCity = 1
+    var currentTour: [Int] = []
+    let n = graph.count - 1
+    currentTour.reserveCapacity(n)
+    currentTour.append(currentCity)
+    var visited = [Bool](repeating: false, count: n+1)
+    visited[0] = true
+    visited[1] = true
+    while currentTour.count < n-1 {
+        
+        let nextCity = graph[currentCity].enumerated()
+            .filter({!visited[$0.offset]}).min(by: {$0.element < $1.element} )!.offset
+        currentTour.append(nextCity)
+        visited[nextCity] = true
+        currentCity = nextCity
+    }
+    currentTour.append(visited.firstIndex(of: false)!)
+    currentTour.append(1)
+    
+    var tour = 0.0
+    for i in 0..<currentTour.count-1 {
+        tour += sqrt(graph[currentTour[i]][currentTour[i+1]])
+    }
+    
+    return tour
+}

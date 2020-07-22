@@ -94,4 +94,36 @@ final class TSPTests: XCTestCase {
             
         }
     }
+    
+    func testTSPNN() {
+        let url = URL.testFile(name: "nn1.txt")
+        
+        XCTAssertEqual(readfile(url), 15.2361, accuracy: 0.01)
+
+    }
+    
+    func readfile(_ url: URL) -> Double {
+        
+        let lines = try! String(contentsOf: url).split(separator: "\n")
+        let n = Int(lines[0])!
+        
+        var points: [(Double, Double)] = [(0,0)]
+        for i in 1...n {
+            let line = lines[i].components(separatedBy: .whitespaces)
+            points.append((Double(line[1])!, Double(line[2])!))
+        }
+        
+        var g = [[Double]](repeating: .init(repeating: .infinity, count: n+1), count: n+1)
+        for i in 1...n {
+            for j in i+1..<n+1 {
+                let dis =
+                    (points[i].0 - points[j].0)*(points[i].0 - points[j].0)
+                        + (points[i].1 - points[j].1)*(points[i].1 - points[j].1)
+                g[i][j] = dis
+                g[j][i] = dis
+            }
+        }
+        
+        return tspNearestNeighbor(g)
+    }
 }
