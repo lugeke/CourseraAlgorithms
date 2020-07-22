@@ -96,34 +96,31 @@ final class TSPTests: XCTestCase {
     }
     
     func testTSPNN() {
-        let url = URL.testFile(name: "nn1.txt")
         
-        XCTAssertEqual(readfile(url), 15.2361, accuracy: 0.01)
-
+        var distance = Int(readfile(URL.testFile(name: "nn1.txt")))
+        XCTAssertEqual(distance, 15)
+        
+        distance = Int(readfile(URL.testFile(name: "nn.txt"), sorted: true))
+        XCTAssertEqual(distance, 1203406)
     }
     
-    func readfile(_ url: URL) -> Double {
+    func readfile(_ url: URL, sorted: Bool = false) -> Double {
         
-        let lines = try! String(contentsOf: url).split(separator: "\n")
+        let lines = try! String(contentsOf: url)
+            .components(separatedBy: .newlines)
         let n = Int(lines[0])!
         
         var points: [(Double, Double)] = [(0,0)]
-        for i in 1...n {
-            let line = lines[i].components(separatedBy: .whitespaces)
+        points.reserveCapacity(n+1)
+        for l in lines.dropFirst().filter({ $0 != ""}) {
+            let line = l.components(separatedBy: .whitespaces)
             points.append((Double(line[1])!, Double(line[2])!))
         }
         
-        var g = [[Double]](repeating: .init(repeating: .infinity, count: n+1), count: n+1)
-        for i in 1...n {
-            for j in i+1..<n+1 {
-                let dis =
-                    (points[i].0 - points[j].0)*(points[i].0 - points[j].0)
-                        + (points[i].1 - points[j].1)*(points[i].1 - points[j].1)
-                g[i][j] = dis
-                g[j][i] = dis
-            }
+        if !sorted {
+            points.sort { $0.0 < $1.0 }
         }
         
-        return tspNearestNeighbor(g)
+        return tspNearestNeighbor(points)
     }
 }
