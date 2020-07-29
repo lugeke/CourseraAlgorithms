@@ -35,7 +35,7 @@ struct Combination<S>: Sequence, IteratorProtocol where S: Sequence{
             }
             
             // traverse index from m-2 to 0
-            for i in (0..<m-1).reversed() {
+            for i in stride(from: m-2, through: 0, by: -1) {
                 // increase index i
                 if indices[i] < n - m + i {
                     indices[i] += 1

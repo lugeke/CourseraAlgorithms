@@ -90,7 +90,7 @@ public func tspNearestNeighbor(_ points: [(x: Double, y: Double)]) -> Double {
             
         }
         
-        for i in (1..<currentCity).reversed() {
+        for i in stride(from: currentCity-1, through: 1, by: -1) {
             if visited[i] { continue }
             let x = (points[currentCity].x - points[i].x)*(points[currentCity].x - points[i].x)
             if x > minDist { break }
