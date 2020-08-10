@@ -31,7 +31,7 @@ struct MinCut {
     mutating func minCount() -> Int {
         for _ in 0..<count-2 {
             let edge = edges.randomElement()!
-            let _ = uf.union(edge.p, edge.q)
+            uf.union(edge.p, edge.q)
             edges.removeAll{ edge in
                 uf.connected(edge.p, edge.q)
             }

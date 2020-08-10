@@ -36,7 +36,7 @@ struct UnionFind {
         return p
     }
     
-    mutating func union(_ p: Int, _ q: Int) -> Int {
+    @discardableResult mutating func union(_ p: Int, _ q: Int) -> Int {
         let i = find(p)
         let j = find(q)
         guard i != j else {

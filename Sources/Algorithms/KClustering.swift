@@ -46,7 +46,7 @@ struct KClustering {
                 }
                 
             } else {
-                _ = uf.union(edge.p, edge.q)
+                uf.union(edge.p, edge.q)
                 
             }
             
@@ -85,7 +85,7 @@ func largestKClustering(_ nodes: Set<Int>, bits: Int) -> Int {
         for mask in masks {
             let nodeQ = mask ^ nodeP
             if let q = dict[nodeQ] {
-                _ = uf.union(p, q)
+                uf.union(p, q)
             }
         }
     }
