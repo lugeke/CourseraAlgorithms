@@ -13,7 +13,7 @@ extension Graph {
     func MST() -> Double? {
         
         var visited: [Bool] = .init(repeating: false, count: n+1)
-        dfs(from: 1, visited: &visited)
+        DFS(from: 1, visited: &visited)
         
         // the graph is connected
         guard visited.dropFirst().allSatisfy({ $0}) else { return nil }

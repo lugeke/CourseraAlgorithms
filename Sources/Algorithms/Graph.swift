@@ -8,12 +8,12 @@
 
 import Foundation
 
-/// a directed graph, with vertex represent by int, start from 1
+/// A directed graph, eacg vertex represent by Int, start from 1
 public struct Graph {
     /// `i`th element  represents  all the vertices whose tail is i
     private var adjList: [[Int]]
     
-    // the max number of vertex
+    // the number of verteices
     var n: Int {
         adjList.count-1
     }
@@ -93,21 +93,23 @@ extension Graph {
         }
         
     }
-    
-    public init(_ n: Int) {
-        self = .init(adjList: .init(repeating: [], count: n+1))
+    /// Create a graph with `vertices` vertices.
+    public init(vertices: Int) {
+        adjList = .init(repeating: [], count: vertices + 1)
     }
 }
 
 
 extension Graph {
-    /// implement dfs search iteratively
+    /// Perform a Depth First Search from the `source` vertex
     /// - Parameters:
     ///   - source: the source vertex
-    ///   - visited: keep track of which vertex were visited
-    ///   - afterVisit: a closure accepct vertex number, run when the vertex pops from stack
-    func dfs(from source: Int, visited: inout [Bool], afterVisit: ((Int) -> ())? = nil ) {
+    ///   - visited: a bool array keeping track of which vertex were visited
+    ///   - vertexSearchEnded: A closure that takes vertex as its argument, run each time a vertex's search ended
+    /// - Requires: `source` vertex is unvisited
+    func DFS(from source: Int, visited: inout [Bool], after vertexSearchEnded: ((Int) -> ())? = nil ) {
         
+        //
         // tuple of (vertex, the first index of the vertex's adjList unvisited)
         var stack: [(Int, Int)] = []
         stack.append((source, 0))
@@ -124,7 +126,7 @@ extension Graph {
                 visited[head] = true
             } else {
                 let last = stack.popLast()!
-                afterVisit?(last.0)
+                vertexSearchEnded?(last.0)
             }
         }
         

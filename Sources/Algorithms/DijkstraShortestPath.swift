@@ -19,7 +19,7 @@ extension Graph {
         var V_X: Set<Int> = .init()
         
         var visited: [Bool] = .init(repeating: false, count: n+1)
-        dfs(from: source, visited: &visited) { V_X.insert($0) }
+        DFS(from: source, visited: &visited) { V_X.insert($0) }
         X.reserveCapacity(V_X.count)
         
         X.insert(source)

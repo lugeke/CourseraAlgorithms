@@ -23,7 +23,7 @@ final class TSPTests: XCTestCase {
     }
     
     func testTSP() {
-        var g = Graph(4)
+        var g = Graph(vertices: 4)
         g.addEdge(1, 2, weight: 2)
         g.addEdge(1, 3, weight: 1)
         g.addEdge(1, 4, weight: 4)
@@ -56,7 +56,7 @@ final class TSPTests: XCTestCase {
             
             
             
-            var g1 = Graph(13)
+            var g1 = Graph(vertices: 13)
             
             for i in 1...13 {
                 for j in i+1..<14 {
@@ -73,7 +73,7 @@ final class TSPTests: XCTestCase {
             
             
             
-            var g2 = Graph(14)
+            var g2 = Graph(vertices: 14)
             
             for i in 12...25 {
                 for j in i+1..<26 {

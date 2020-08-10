@@ -16,7 +16,7 @@ final class AllPairsTests: XCTestCase {
     
     
     func testAllPairs() {
-        var g = Graph(3)
+        var g = Graph(vertices: 3)
         g.addEdge(1, 2, weight: 1)
         g.addEdge(2, 3, weight: 2)
         g.addEdge(1, 3, weight: 6)

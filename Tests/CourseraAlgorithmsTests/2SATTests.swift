@@ -20,7 +20,7 @@ final class TwoSATTests: XCTestCase {
         
         let n = Int(lines[0])!
         
-        var g = Graph(n*2)
+        var g = Graph(vertices: n*2)
         for l in lines[1...] where l != "" {
             let line = l.components(separatedBy: .whitespaces)
             let v0 = Int(line[0])!, v1 = Int(line[1])!

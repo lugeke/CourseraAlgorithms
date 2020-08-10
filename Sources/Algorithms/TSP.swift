@@ -61,7 +61,11 @@ extension Graph {
     }
 }
 
-
+/// Return tsp distance using nearest neighbor huristic alogrithm
+/// - Parameter points: the cities represent by coordinates,
+///   start from index 1.
+/// - Requires: the points are sorted by x axis
+/// - Returns: the minimum distance of tsp problem
 public func tspNearestNeighbor(_ points: [(x: Double, y: Double)]) -> Double {
     
     var currentCity = 1

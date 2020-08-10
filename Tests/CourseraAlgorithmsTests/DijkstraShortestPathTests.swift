@@ -11,7 +11,7 @@ import Foundation
 
 extension Graph {
     init(num: Int, fromURL url: URL) {
-        self = .init(num)
+        self = .init(vertices: num)
         let lines = try! String(contentsOf: url).components(separatedBy: .newlines)
         
         for line in lines {
