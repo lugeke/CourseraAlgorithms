@@ -41,10 +41,10 @@ extension Array where Element: Comparable {
         
         var sum = range.count - 1
         if i - 2 > range.lowerBound {
-            sum += quickSort(range: range.prefix(upTo: i-1), pivotPolicy: pivotPolicy)
+            sum += quickSort(range: range[..<(i-1)], pivotPolicy: pivotPolicy)
         }
         if i < range.upperBound {
-            sum += quickSort(range: range.suffix(from: i), pivotPolicy: pivotPolicy)
+            sum += quickSort(range: range[i...], pivotPolicy: pivotPolicy)
         }
         return sum
     }
